@@ -15,7 +15,7 @@ parser.add_argument('name')
 parser.add_argument('lastname')
 parser.add_argument('email')
 parser.add_argument('location')
-parser.add_argument('avatar')
+parser.add_argument('identifier')
 
 
 class AllProfiles(Resource):
@@ -42,7 +42,8 @@ class AllProfiles(Resource):
         elif args['name'] == '' or args['lastname'] == '' or args['email'] == '':
             abort(Response("Couldn't add department of hospital. Check insert data", 400))
         else:
-            profile_service.add_profile(args['name'], args['lastname'], args['avatar'], args['location'], args['email'])
+            profile_service.add_profile(args['name'], args['lastname'], args['location'], args['email'],
+                                        int(args['identifier']))
         return "Profile added", 201
 
     @staticmethod
@@ -68,6 +69,6 @@ class AllProfiles(Resource):
         elif args['name'] == '' or args['lastname'] == '' or args['email'] == '':
             abort(Response("Couldn't add department of hospital. Check insert data", 400))
         else:
-            profile_service.update_profile(identifier, args['name'], args['lastname'], args['avatar'], args['location'],
+            profile_service.update_profile(identifier, args['name'], args['lastname'], args['location'],
                                            args['email'])
         return "Profile updated", 200

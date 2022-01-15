@@ -14,7 +14,7 @@ class Profile(database.Model):
     name = database.Column(database.String(length=255), nullable=False)
 
     #: user Surname
-    surname = database.Column(database.String(length=255), nullable=False)
+    lastname = database.Column(database.String(length=255), nullable=False)
 
     #: user avatar
     avatar = database.Column(database.BLOB())
@@ -36,7 +36,7 @@ class Profile(database.Model):
         # pylint: disable=no-member
         return {
             'name': self.name,
-            'surname': self.surname,
+            'lastname': self.lastname,
             'avatar': self.avatar,
             'location': self.location,
             'email': self.email,

@@ -7,4 +7,4 @@ from .homepage import messanger
 @messanger.route('/profile/settings')
 @login_required
 def settings():
-    return render_template('settings.html', session=session)
+    return render_template('settings.html', session=dict(session))

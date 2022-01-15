@@ -12,6 +12,6 @@ def create_api(application):
     api = Api(application)
 
     # adding the department resources
-    api.add_resource(profile_api.AllProfiles, '/api/profiles/<identifier>')
+    api.add_resource(profile_api.AllProfiles, '/api/profiles')
 
     return api

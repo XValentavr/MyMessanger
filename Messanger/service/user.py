@@ -33,7 +33,6 @@ def authorize_user(password: str, login: str, UUID, phone: str):
     :param UUID: uuid identifier of user
     :return: None
     """
-    print(password)
     user = Authorize(password=password, login=login, UUID=UUID, phone=phone)
     database.session.add(user)
     database.session.commit()

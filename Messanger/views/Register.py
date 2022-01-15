@@ -5,7 +5,6 @@ from flask import render_template, flash, redirect, url_for, session
 import uuid
 
 from flask_login import login_user
-
 from .homepage import messanger
 from Messanger.service import user
 from . import WTFFormRegister

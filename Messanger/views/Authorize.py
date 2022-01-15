@@ -27,6 +27,8 @@ def login():
     :return: html page
     """
     form = WTFormLogin.LoginForm()
+    if 'UUID' in session:
+        return redirect(url_for('messanger.homepage'))
     if form.validate_on_submit():
         current_user = user.get_user_by_name(form.username.data)
         if form.remember.data:
@@ -36,7 +38,7 @@ def login():
             login_user(current_user)
             session['UUID'] = current_user.UUID
             return redirect(url_for('messanger.homepage'))
-    flash('An error occured. Try again','error')
+        flash('An error occured. Try again','error')
     return render_template('login.html', form=form)
 
 

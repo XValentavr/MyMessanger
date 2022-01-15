@@ -14,7 +14,7 @@ class RegisterForm(FlaskForm):
     username = StringField('Your name:', validators=[DataRequired(), Length(min=4, max=25,
                                                                             message='Field must be between 4 '
                                                                                     'and 25 characters long.')])
-    password = PasswordField('Password: ', validators=[DataRequired(), Length(min=4, max=100)])
+    password = PasswordField('Password:     ', validators=[DataRequired(), Length(min=4, max=100)])
     phone = StringField('Phone number: ', validators=[DataRequired(), Length(min=4, max=16)])
 
     register = SubmitField('Register')

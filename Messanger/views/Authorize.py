@@ -7,14 +7,14 @@ from flask import render_template, redirect, session, app, url_for, flash
 from flask_login import login_required, logout_user, login_user
 from .homepage import messanger
 from . import WTFormLogin
-from Messanger.service import user
+from Messanger.service import user_service
 from Messanger import login_manager
 from werkzeug.security import check_password_hash
 
 
 @login_manager.user_loader
 def load_user(UUID):
-    return user.Authorize.query.get(UUID)
+    return user_service.Authorize.query.get(UUID)
 
 
 @messanger.route('/login', methods=["POST", "GET"])
@@ -30,7 +30,7 @@ def login():
     if 'UUID' in session:
         return redirect(url_for('messanger.homepage'))
     if form.validate_on_submit():
-        current_user = user.get_user_by_name(form.username.data)
+        current_user = user_service.get_user_by_name(form.username.data)
         if form.remember.data:
             session.permanent = True
             app.permanent_session_lifetime = timedelta(hours=24)

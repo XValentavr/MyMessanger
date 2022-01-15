@@ -6,7 +6,7 @@ import uuid
 
 from flask_login import login_user
 from .homepage import messanger
-from Messanger.service import user
+from Messanger.service import user_service
 from . import WTFFormRegister
 from werkzeug.security import generate_password_hash
 
@@ -15,14 +15,14 @@ from werkzeug.security import generate_password_hash
 def register():
     register_form = WTFFormRegister.RegisterForm()
     if register_form.validate_on_submit():
-        if user.get_user_by_name(login=register_form.username.data) is None and user.get_user_by_phone(
+        if user_service.get_user_by_name(login=register_form.username.data) is None and user_service.get_user_by_phone(
                 phone=register_form.phone.data) is None:
-            user.authorize_user(password=generate_password_hash(register_form.password.data),
-                                login=register_form.username.data,
-                                phone=register_form.phone.data,
-                                UUID=uuid.uuid4())
+            user_service.authorize_user(password=generate_password_hash(register_form.password.data),
+                                        login=register_form.username.data,
+                                        phone=register_form.phone.data,
+                                        UUID=uuid.uuid4())
             flash('you have been registered successfully registered', 'success')
-            current_user = user.get_user_by_name(register_form.username.data)
+            current_user = user_service.get_user_by_name(register_form.username.data)
             login_user(current_user)
             session['UUID'] = current_user.UUID
             return redirect(url_for('messanger.homepage'))

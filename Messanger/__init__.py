@@ -14,6 +14,8 @@ login_manager = LoginManager()
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
+    from .rest import create_api
+    create_api(app)
     from .views.homepage import messanger
     database.init_app(app)
     Migrate(app, database, directory=os.path.join('hospital_app', 'migrations'))

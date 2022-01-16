@@ -1,10 +1,125 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% block content %}
+    <head>
+        <meta charset="utf-8">
+        <title>Profile</title>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet"
+              id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
 
-</body>
-</html>
+    </head>
+    <link type="text/css" href="{{ url_for('static', filename='css/profile_css.css') }}" rel="stylesheet"/>
+    <p id="session" hidden>{{ session }}</p>
+    <script type="text/javascript"
+            src="{{ url_for('static', filename='js/profile/settings.js') }}"></script>
+    <div class="container emp-profile">
+        {% if (flag) %}
+            <form method="post">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-img">
+                            <img src="{{ url_for('messanger.avatar') }}" class="avatar img-circle img-thumbnail"
+                                 alt="avatar">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="profile-head">
+                            <h5>
+                                {{ info.name }} {{ info.lastname }}
+                            </h5>
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                                       aria-controls="home" aria-selected="true">About</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <a href="{{ url_for('messanger.change') }}" class="profile-edit-btn"
+                           type="submit" role="button"><i
+                                class=" glyphicon glyphicon-ok-sign"></i> Edit profile
+                        </a>
+                        <a href="{{ url_for('messanger.homepage') }}" class="profile-edit-btn"
+                           type="submit" role="button"><i
+                                class=" glyphicon glyphicon-ok-sign"></i>Home
+                        </a>
+                        <a href="{{ url_for('messanger.logout') }}" class="profile-edit-btn"
+                           type="submit" role="button"><i
+                                class=" glyphicon glyphicon-ok-sign"></i>Logout
+                        </a>
+
+                        <a href="{{ url_for('messanger.logout') }}" class="profile-edit-btn"
+                           type="submit" role="button" onclick="checker_where_are_you()"><i
+                                class=" glyphicon glyphicon-ok-sign"></i>Delete account
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="tab-content profile-tab" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <div class="row">
+                                    <div class="col-md-6" id=>
+                                        <label>Your username</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>{{ foreign.login }}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Email</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>{{ info.email }}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Phone</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>{{ foreign.phone }}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Location</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>{{ info.location }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        {% else %}
+            <form method="post">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="profile-head">
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                                       aria-controls="home" aria-selected="true">About</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <a href="{{ url_for('messanger.settings') }}" class="profile-edit-btn"
+                           type="submit" role="button"><i
+                                class=" glyphicon glyphicon-ok-sign"></i> Add profile information
+                        </a></div>
+
+                </div>
+            </form>
+        {% endif %}
+    </div>
+{% endblock %}

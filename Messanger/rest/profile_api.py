@@ -18,9 +18,19 @@ parser.add_argument('location')
 parser.add_argument('identifier')
 
 
+def abort_of_already_exists(identifier: int):
+    """
+    this module forbid adding user if user already exists
+    :param identifier: user identifier
+    :return: None
+    """
+    if profile_service.get_profiles(identifier):
+        abort(Response("Department of hosptital {} already exist".format(identifier), 404))
+
+
 class AllProfiles(Resource):
     """
-     This is the class for AllDepartments Resource available at /hospital url
+     This is the class for AllProfiles Resource available at /profile url
     """
 
     @staticmethod
@@ -31,10 +41,11 @@ class AllProfiles(Resource):
     def post():
         """
         This method is called when POST request is sent
-        :return: the 'Department added' response with status code 201
+        :return: the 'user added' response with status code 201
         """
 
         args = parser.parse_args()
+        abort_of_already_exists(args['identifier'])
         if args['name'] is None or args['lastname'] is None or args['email'] is None:
             abort(Response("Couldn't add department of hospital. Check insert data", 400))
         elif args['name'].strip() == '' or args['lastname'].strip() == '' or args['email'].strip() == '':
@@ -43,20 +54,21 @@ class AllProfiles(Resource):
             abort(Response("Couldn't add department of hospital. Check insert data", 400))
         else:
             profile_service.add_profile(args['name'], args['lastname'], args['location'], args['email'],
-                                        int(args['identifier']))
+                                        (args['identifier'].strip()))
         return "Profile added", 201
 
     @staticmethod
-    def delete(identifier: int):
+    def delete():
         """
         This method is called when DELETE request is sent
         :return: the empty response with status code 204
         """
-        profile_service.delete_profile(identifier)
-        return 'Profile deleted', 200
+        args = parser.parse_args()
+        profile_service.delete_profile(args['identifier'].strip())
+        return 'Profile deleted', 204
 
     @staticmethod
-    def put(identifier):
+    def put():
         """
         This method is called when PUT request is sent
         :return: the 'Profile updated' response with status code 200
@@ -69,6 +81,7 @@ class AllProfiles(Resource):
         elif args['name'] == '' or args['lastname'] == '' or args['email'] == '':
             abort(Response("Couldn't add department of hospital. Check insert data", 400))
         else:
-            profile_service.update_profile(identifier, args['name'], args['lastname'], args['location'],
+            profile_service.update_profile((args['identifier'].strip()), args['name'], args['lastname'],
+                                           args['location'],
                                            args['email'])
         return "Profile updated", 200

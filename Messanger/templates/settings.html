@@ -7,14 +7,20 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
+    <link type="text/css" href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet"/>
+    <style>
+        body {
+            background: -webkit-linear-gradient(left, lightgray, gray);
+        }
+    </style>
 
     <p id="session" hidden>{{ session }}</p>
     <script type="text/javascript"
             src="{{ url_for('static', filename='js/profile/settings.js') }}"></script>
     <hr>
-    <div class="container bootstrap snippet">
+    <div class="container emp-profile">
         <div class="row">
-            <div class="col-sm-3"><!--left col-->
+            <div class="col-sm-3">
 
 
                 <div class="text-center">
@@ -23,7 +29,7 @@
                     <h6>Upload your photo</h6>
                     <form action="{{ url_for('messanger.upload') }}" method="POST" enctype="multipart/form-data">
                         <p><input type="file" name="file">
-                        <p><input type="submit" value="Upload">
+                        <p align="left"><input type="submit" value="Upload">
                     </form>
                 </div>
                 </hr><br>
@@ -74,13 +80,17 @@
                             <div class="form-group">
                                 <div class="col-xs-12">
                                     <br>
-                                    <a href="{{ url_for('messanger.settings') }}" class="btn btn-lg btn-success"
-                                       type="submit" role="button" onclick="insert_data()"><i
+                                    <a href="" class="btn btn-lg btn-success"
+                                       type="submit" role="button" onclick="checker_where_are_you()"><i
                                             class=" glyphicon glyphicon-ok-sign"></i> Save
                                     </a>
                                     <button class="btn btn-lg" type="reset"><i class="glyphicon glyphicon-repeat"></i>
                                         Reset
                                     </button>
+                                    <a href="{{ url_for('messanger.profile') }}" class="btn btn-lg btn-success"
+                                       type="submit" role="button" ><i
+                                            class=" glyphicon glyphicon-ok-sign"></i> Back
+                                    </a>
                                 </div>
                             </div>
                         </form>

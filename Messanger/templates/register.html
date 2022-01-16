@@ -1,27 +1,30 @@
 <!DOCTYPE html>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+<link type="text/css" href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet"/>
+
 <html lang="en">
-    {% for cat, msg in get_flashed_messages(True) %}
-        <div class="flash {{ cat }}">{{ msg }}</div>
-    {% endfor %}
-    <div id="login" class="wnd_dlg_back login_wnd">
-        <div class="login">
-            <form action="" method="post" class="form-contact">
-                {{ form.hidden_tag() }}
-                {% for field in form if field.name not in ['csrf_token', 'register'] -%}
-                    <p>{{ field.label() }}
-                    {% if field.errors %}
-                        {{ field(class="invalid") }}
-                        <span class="invalid-feedback">
+{% for cat, msg in get_flashed_messages(True) %}
+    <div class="flash {{ cat }}">{{ msg }}</div>
+{% endfor %}
+<div id="login" class="wnd_dlg_back login_wnd">
+    <div class="login">
+        <form action="" method="post" class="form-contact">
+            {{ form.hidden_tag() }}
+            {% for field in form if field.name not in ['csrf_token', 'register'] -%}
+                <p>{{ field.label() }}
+                {% if field.errors %}
+                    {{ field(class="invalid") }}
+                    <span class="invalid-feedback">
 		{% for e in field.errors %}
             {{ e }}
         {% endfor %}
 	</span>
-                    {% else %}
-                        {{ field() }}
-                    {% endif %}
-                {% endfor %}
-                <p>{{ form.register() }}
-            </form>
-        </div>
+                {% else %}
+                    {{ field() }}
+                {% endif %}
+            {% endfor %}
+            <p>{{ form.register() }}
+        </form>
     </div>
-    </html>
+</div>
+</html>

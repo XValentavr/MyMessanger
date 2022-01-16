@@ -29,7 +29,7 @@ def login():
     form = WTFormLogin.LoginForm()
     if 'UUID' in session:
         return redirect(url_for('messanger.homepage'))
-    if form.validate_on_submit():
+    elif form.validate_on_submit():
         current_user = user_service.get_user_by_name(form.username.data)
         if form.remember.data:
             session.permanent = True
@@ -38,7 +38,7 @@ def login():
             login_user(current_user)
             session['UUID'] = current_user.UUID
             return redirect(url_for('messanger.homepage'))
-        flash('An error occured. Try again','error')
+        flash('An error occured. Try again', 'error')
     return render_template('login.html', form=form)
 
 
@@ -51,4 +51,5 @@ def logout():
     """
     logout_user()
     session.pop('UUID')
+    print('logout=', session)
     return redirect(url_for('messanger.homepage'))

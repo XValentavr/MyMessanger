@@ -1,20 +1,24 @@
-from flask import render_template, make_response, request, session, flash, redirect, url_for
+from flask import render_template, make_response, request, session, flash, redirect
 from flask_login import login_required
 
 from .homepage import messanger
-from ..service.profile_service import check_if_is_available, update_avatar, get_avatar
+from ..service.profile_service import  update_avatar, get_avatar, get_profiles, get_foreign_values
 
 
 @messanger.route('/profile')
 @login_required
 def profile():
-    return render_template('profile.html')
+    flag = False
+    if get_profiles(session['UUID']):
+        flag = True
+    return render_template('profile.html', flag=flag, info=get_profiles(session['UUID']),
+                           foreign=get_foreign_values(session['UUID']))
 
 
 @messanger.route('/avatar')
 @login_required
 def avatar():
-    response = make_response(get_avatar(session['_user_id']))
+    response = make_response(get_avatar(session['UUID']))
     response.headers['Content-Type'] = 'image/png'
     return response
 
@@ -24,13 +28,12 @@ def avatar():
 def upload():
     if request.method == 'POST':
         file = request.files['file']
-        if file and check_if_is_available(file.filename):
-            try:
-                img = file.read()
-                update_avatar(img, session['_user_id'])
-            except FileNotFoundError as e:
-                flash("An error occured. Please try again.", "error")
-        else:
-            flash("An error occured. This format file is not supported. Use png.", "error")
+        try:
+            img = file.read()
+            update_avatar(img, session['UUID'])
+        except FileNotFoundError as e:
+            flash("An error occured. Please try again.", "error")
+    else:
+        flash("An error occured. This format file is not supported. Use png.", "error")
 
-    return redirect(url_for('messanger.profile'))
+    return redirect(request.referrer)

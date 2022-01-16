@@ -36,3 +36,13 @@ def authorize_user(password: str, login: str, UUID, phone: str):
     user = Authorize(password=password, login=login, UUID=UUID, phone=phone)
     database.session.add(user)
     database.session.commit()
+
+
+def delete_user(id: str):
+    """
+    This function deletes all user info
+    :param id: user identifier
+    """
+    user = Authorize.query.filter_by(UUID=id).first()
+    database.session.delete(user)
+    database.session.commit()

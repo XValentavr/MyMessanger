@@ -8,3 +8,9 @@ from .homepage import messanger
 @login_required
 def settings():
     return render_template('settings.html', session=dict(session))
+
+
+@messanger.route('/profile/change')
+@login_required
+def change():
+    return render_template('change.html', session=dict(session))

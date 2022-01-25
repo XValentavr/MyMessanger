@@ -2,7 +2,7 @@ from flask import render_template, make_response, request, session, flash, redir
 from flask_login import login_required
 
 from .homepage import messanger
-from ..service.profile_service import  update_avatar, get_avatar, get_profiles, get_foreign_values
+from ..service.profile_service import update_avatar, get_avatar, get_profiles, get_foreign_values
 
 
 @messanger.route('/profile')

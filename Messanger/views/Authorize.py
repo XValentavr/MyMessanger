@@ -51,5 +51,4 @@ def logout():
     """
     logout_user()
     session.pop('UUID')
-    print('logout=', session)
     return redirect(url_for('messanger.homepage'))
